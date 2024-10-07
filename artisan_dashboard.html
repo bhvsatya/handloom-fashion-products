@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artisan Dashboard - Handloom Fashion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Artisan Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="artisanLogout()">Logout</a></li> <!-- Updated Logout -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Welcome, Artisan!</h2>
+        <p>List handloom products, manage inventory, and interact with buyers.</p>
+        
+        <!-- Artisan functionalities go here -->
+        <section id="artisan-actions">
+            <button onclick="artisanListProducts()">List Products</button>
+            <button onclick="artisanAddProduct()">Add New Product</button>
+            <button onclick="artisanInteractWithBuyers()">Interact with Buyers</button>
+            <div id="action-content">
+                <!-- Dynamic content based on artisan actions will appear here -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- Include the script for artisan dashboard functionality -->
+    <script src="artisan.js"></script>
+</body>
+</html>

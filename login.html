@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Handloom Fashion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Login to Handloom Fashion</h2>
+        <form id="loginForm" onsubmit="return loginUser()">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="auth-btn">Login</button>
+        </form>
+        <p>Don't have an account? <a href="register.html">Register here</a></p>
+        <button onclick="window.location.href='home.html'" class="auth-btn">Home</button>
+    </div>
+
+    <script>
+        // Redirect to registration if not registered
+        if (!localStorage.getItem('registered')) {
+            alert('Please register before logging in.');
+            window.location.href = 'register.html';
+        }
+
+        function loginUser() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Retrieve stored user credentials
+            const storedEmail = localStorage.getItem('userEmail');
+            const storedPassword = localStorage.getItem('userPassword');
+            const userRole = localStorage.getItem('userRole');
+
+            // Check credentials
+            if (email === storedEmail && password === storedPassword) {
+                alert("Login successful!");
+                
+                // Redirect based on role
+                switch (userRole) {
+                    case 'admin':
+                        window.location.href = 'admin_dashboard.html'; // Replace with your admin dashboard
+                        break;
+                    case 'artisan':
+                        window.location.href = 'artisan_dashboard'; // Replace with your artisan dashboard
+                        break;
+                    case 'buyer':
+                        window.location.href = 'buyer_dashboard.html'; // Replace with your buyer dashboard
+                        break;
+                    case 'marketing':
+                        window.location.href = 'marketing-dashboard.html'; // Replace with your marketing dashboard
+                        break;
+                    default:
+                        alert("User role not recognized.");
+                }
+                return false;  // Prevent form submission
+            } else {
+                alert("Invalid credentials, please try again.");
+                return false;  // Prevent form submission
+            }
+        }
+    </script>
+</body>
+</html>

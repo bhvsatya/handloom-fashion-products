@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Dashboard - Handloom Fashion</title>
+    <link rel="stylesheet" href="buyer.css">
+</head>
+<body>
+    <header>
+        <h1>Buyer Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="buyerLogout()">Logout</a></li> <!-- Updated Logout -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Welcome, Buyer!</h2>
+        <p>Browse products, track orders, and provide feedback.</p>
+        
+        <!-- Buyer functionalities go here -->
+        <section id="buyer-actions">
+            <button onclick="buyerBrowseProducts()">Browse Products</button>
+            <button onclick="buyerTrackOrders()">Track Orders</button>
+            <button onclick="buyerProvideFeedback()">Provide Feedback</button>
+            <div id="action-content">
+                <!-- Dynamic content based on buyer actions will appear here -->
+            </div>
+        </section>
+    </main>
+    
+    <!-- Include the script for buyer dashboard functionality -->
+    <script src="buyer.js"></script>
+</body>
+</html>

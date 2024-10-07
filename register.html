@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Handloom Fashion</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .validation {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .valid {
+            color: green;
+        }
+
+        .invalid {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h2>Register at Handloom Fashion</h2>
+        <form id="registerForm" onsubmit="return registerUser()">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" required onkeyup="validatePassword()">
+                <small id="passwordError" class="error-message"></small>
+                <div class="validation">
+                    <p id="length" class="invalid">Minimum 8 characters</p>
+                    <p id="uppercase" class="invalid">At least 1 uppercase letter</p>
+                    <p id="lowercase" class="invalid">At least 1 lowercase letter</p>
+                    <p id="digit" class="invalid">At least 1 digit</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role" required>
+                    <option value="admin">Admin</option>
+                    <option value="artisan">Artisan</option>
+                    <option value="buyer">Buyer</option>
+                    <option value="marketing">Marketing Specialist</option>
+                </select>
+            </div>
+            <button type="submit" class="auth-btn">Register</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login here</a></p>
+    </div>
+
+    <script>
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const lengthCriteria = document.getElementById('length');
+            const uppercaseCriteria = document.getElementById('uppercase');
+            const lowercaseCriteria = document.getElementById('lowercase');
+            const digitCriteria = document.getElementById('digit');
+
+            lengthCriteria.classList.toggle('valid', password.length >= 8);
+            lengthCriteria.classList.toggle('invalid', password.length < 8);
+
+            uppercaseCriteria.classList.toggle('valid', /[A-Z]/.test(password));
+            uppercaseCriteria.classList.toggle('invalid', !/[A-Z]/.test(password));
+
+            lowercaseCriteria.classList.toggle('valid', /[a-z]/.test(password));
+            lowercaseCriteria.classList.toggle('invalid', !/[a-z]/.test(password));
+
+            digitCriteria.classList.toggle('valid', /\d/.test(password));
+            digitCriteria.classList.toggle('invalid', !/\d/.test(password));
+        }
+
+        function registerUser() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+
+            // No email verification logic
+            // Store user info in localStorage
+            localStorage.setItem('registered', 'true');
+            localStorage.setItem('userEmail', email);
+            localStorage.setItem('userPassword', password);
+            localStorage.setItem('userRole', role);
+
+            alert('Registration successful!');
+            window.location.href = 'login.html';  // Redirect to login after registration
+
+            return false;  // Prevent form submission
+        }
+    </script>
+</body>
+</html>

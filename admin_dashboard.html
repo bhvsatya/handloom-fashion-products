@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Handloom Fashion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="logout()">Logout</a></li> <!-- Updated Logout Link -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Welcome, Admin!</h2>
+        <p>Manage users, oversee platform operations, and ensure content accuracy.</p>
+        
+        <!-- User Management Section -->
+        <section id="user-management">
+            <h3>User Management</h3>
+            <button onclick="viewUsers()">View All Users</button>
+            <button onclick="addUser()">Add User</button>
+            <button onclick="editUser()">Edit User Roles</button>
+            <button onclick="deleteUser()">Delete User</button>
+            <div id="user-actions">
+                <!-- Dynamic content based on user management actions will appear here -->
+            </div>
+        </section>
+
+        <!-- Content Accuracy Section -->
+        <section id="content-management">
+            <h3>Content Management</h3>
+            <button onclick="viewContent()">View All Content</button>
+            <button onclick="verifyContent()">Verify Content Accuracy</button>
+            <button onclick="removeContent()">Remove Inappropriate Content</button>
+            <div id="content-actions">
+                <!-- Dynamic content based on content management actions will appear here -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Simulated data for users and content
+        const users = [
+            { id: 1, name: "Artisan User", role: "Artisan" },
+            { id: 2, name: "Buyer User", role: "Buyer" },
+            { id: 3, name: "Marketing Specialist", role: "Marketing" }
+        ];
+
+        const content = [
+            { id: 1, title: "Handloom Product 1", status: "Pending" },
+            { id: 2, title: "Handloom Product 2", status: "Verified" }
+        ];
+
+        // Function to view all users
+        function viewUsers() {
+            let userList = "<ul>";
+            users.forEach(user => {
+                userList += `<li>${user.name} - ${user.role}</li>`;
+            });
+            userList += "</ul>";
+            document.getElementById('user-actions').innerHTML = `<h4>All Users</h4>${userList}`;
+        }
+
+        // Function to add a new user (mock form)
+        function addUser() {
+            const formHTML = `
+                <h4>Add New User</h4>
+                <form id="addUserForm">
+                    <label>Name: <input type="text" id="newUserName"></label><br>
+                    <label>Role: 
+                        <select id="newUserRole">
+                            <option value="Artisan">Artisan</option>
+                            <option value="Buyer">Buyer</option>
+                            <option value="Marketing">Marketing</option>
+                        </select>
+                    </label><br>
+                    <button type="button" onclick="submitAddUser()">Submit</button>
+                </form>
+            `;
+            document.getElementById('user-actions').innerHTML = formHTML;
+        }
+
+        function submitAddUser() {
+            const name = document.getElementById('newUserName').value;
+            const role = document.getElementById('newUserRole').value;
+
+            if (name === "" || role === "") {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            users.push({ id: users.length + 1, name: name, role: role });
+            alert(`User ${name} added successfully!`);
+            viewUsers();  // Refresh the user list
+        }
+
+        // Function to edit user roles
+        function editUser() {
+            let userList = "<h4>Edit User Roles</h4><ul>";
+            users.forEach(user => {
+                userList += `
+                    <li>
+                        ${user.name} (${user.role}) 
+                        <select onchange="updateUserRole(${user.id}, this.value)">
+                            <option value="Artisan" ${user.role === "Artisan" ? "selected" : ""}>Artisan</option>
+                            <option value="Buyer" ${user.role === "Buyer" ? "selected" : ""}>Buyer</option>
+                            <option value="Marketing" ${user.role === "Marketing" ? "selected" : ""}>Marketing</option>
+                        </select>
+                    </li>`;
+            });
+            userList += "</ul>";
+            document.getElementById('user-actions').innerHTML = userList;
+        }
+
+        function updateUserRole(userId, newRole) {
+            const user = users.find(u => u.id === userId);
+            user.role = newRole;
+            alert(`User role updated to ${newRole}`);
+        }
+
+        // Function to delete a user
+        function deleteUser() {
+            let userList = "<h4>Delete User</h4><ul>";
+            users.forEach(user => {
+                userList += `<li>${user.name} <button onclick="confirmDeleteUser(${user.id})">Delete</button></li>`;
+            });
+            userList += "</ul>";
+            document.getElementById('user-actions').innerHTML = userList;
+        }
+
+        function confirmDeleteUser(userId) {
+            const userIndex = users.findIndex(u => u.id === userId);
+            const userName = users[userIndex].name;
+            users.splice(userIndex, 1);  // Remove user
+            alert(`User ${userName} deleted successfully!`);
+            viewUsers();  // Refresh the user list
+        }
+
+        // Function to view all content
+        function viewContent() {
+            let contentList = "<ul>";
+            content.forEach(item => {
+                contentList += `<li>${item.title} - ${item.status}</li>`;
+            });
+            contentList += "</ul>";
+            document.getElementById('content-actions').innerHTML = `<h4>All Content</h4>${contentList}`;
+        }
+
+        // Function to verify content
+        function verifyContent() {
+            let contentList = "<h4>Verify Content</h4><ul>";
+            content.forEach(item => {
+                if (item.status === "Pending") {
+                    contentList += `<li>${item.title} - ${item.status} <button onclick="markVerified(${item.id})">Verify</button></li>`;
+                }
+            });
+            contentList += "</ul>";
+            document.getElementById('content-actions').innerHTML = contentList;
+        }
+
+        function markVerified(contentId) {
+            const contentItem = content.find(c => c.id === contentId);
+            contentItem.status = "Verified";
+            alert(`Content "${contentItem.title}" has been verified.`);
+            viewContent();  // Refresh content list
+        }
+
+        // Function to remove inappropriate content
+        function removeContent() {
+            let contentList = "<h4>Remove Content</h4><ul>";
+            content.forEach(item => {
+                contentList += `<li>${item.title} - ${item.status} <button onclick="confirmRemoveContent(${item.id})">Remove</button></li>`;
+            });
+            contentList += "</ul>";
+            document.getElementById('content-actions').innerHTML = contentList;
+        }
+
+        function confirmRemoveContent(contentId) {
+            const contentIndex = content.findIndex(c => c.id === contentId);
+            const contentTitle = content[contentIndex].title;
+            content.splice(contentIndex, 1);  // Remove content
+            alert(`Content "${contentTitle}" removed successfully!`);
+            viewContent();  // Refresh content list
+        }
+
+        // Logout function to handle redirection to home.html
+        function logout() {
+            // Simulate the logout process (In production, this can call the server-side logout API)
+            alert("You have been logged out.");
+
+            // Redirect to home page after logout
+            window.location.href = 'home.html';
+        }
+    </script>
+</body>
+</html>
